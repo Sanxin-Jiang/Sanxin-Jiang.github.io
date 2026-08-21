@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationList from '../components/PublicationList.astro';
+import publications from '../data/publications.json';
+import { profile, researchAreas } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
+const linkTo = (href: string) => `${base}${href}`;
+const selectedPublications = publications.filter((publication) => publication.selected).slice(0, 4);
+---
+
+<BaseLayout>
+  <section class="hero section-pad">
+    <div class="hero-copy">
+      <p class="eyebrow">{profile.tagline}</p>
+      <h1>{profile.name}</h1>
+      <p class="name-zh">{profile.nameZh}</p>
+      <p class="hero-role">{profile.role} · {profile.roleZh}<br />{profile.departmentZh}<br />{profile.institutionZh}</p>
+      <p class="hero-statement">{profile.statement}</p>
+      <div class="button-row">
+        <a class="button primary" href={linkTo('research/')}>Explore research <span>→</span></a>
+        <a class="button secondary" href={linkTo('publications/')}>View publications</a>
+      </div>
+      <div class="identity-links" aria-label="Academic profiles">
+        <a href={profile.links.scholar} target="_blank" rel="noopener">Google Scholar ↗</a>
+        <a href={profile.links.orcid} target="_blank" rel="noopener">ORCID ↗</a>
+        <a href={`mailto:${profile.email}`}>Email ↗</a>
+      </div>
+    </div>
+
+    <div class="portrait-wrap">
+      <div class="portrait-card">
+        {profile.photo ? (
+          <img src={`${base}${profile.photo}`} alt={`Portrait of ${profile.name} (${profile.nameZh})`} />
+        ) : (
+          <div class="portrait-placeholder" aria-label="Portrait placeholder">
+            <span>{profile.initials}</span>
+          </div>
+        )}
+      </div>
+      <div class="portrait-note">
+        <span class="status-dot"></span>
+        Shanghai · Signal processing & visual AI
+      </div>
+    </div>
+  </section>
+
+  <section class="about-strip">
+    <p class="eyebrow">About</p>
+    <div>
+      <h2>From efficient audio representations to reliable visual perception.</h2>
+      <p>
+        I am a lecturer in the School of Electronics and Information Engineering at Shanghai University of Electric Power.
+        My work began in audio MDCT coding and compressive sensing at Shanghai Jiao Tong University, and has expanded to
+        industrial defect detection, camouflaged object detection, and rate–distortion guided diffusion models for learned image compression.
+      </p>
+    </div>
+    <dl class="quick-facts">
+      <div><dt>Focus</dt><dd>Signal & Vision</dd></div>
+      <div><dt>Affiliation</dt><dd>SHIEP</dd></div>
+      <div><dt>Ph.D.</dt><dd>SJTU, 2015</dd></div>
+    </dl>
+  </section>
+
+  <section class="section-pad research-preview">
+    <div class="section-heading">
+      <div><p class="eyebrow">Research</p><h2>Five connected directions</h2></div>
+      <a class="text-link" href={linkTo('research/')}>Research overview →</a>
+    </div>
+    <div class="research-grid">
+      {researchAreas.map((area) => (
+        <a class="research-card" href={`${linkTo('research/')}#${area.slug}`}>
+          <span class="card-number">{area.number}</span>
+          <h3>{area.title}</h3>
+          <p>{area.short}</p>
+          <span class="card-arrow">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-pad selected-work">
+    <div class="section-heading">
+      <div><p class="eyebrow">Selected work</p><h2>Recent & representative publications</h2></div>
+      <a class="text-link" href={linkTo('publications/')}>Full publication list →</a>
+    </div>
+    <PublicationList publications={selectedPublications} compact />
+  </section>
+
+  <section class="contact-banner">
+    <p class="eyebrow">Contact</p>
+    <h2>Research collaboration & student inquiry</h2>
+    <p>For collaboration or student supervision related to visual perception, audio sensing, or learned compression, please reach out by email.</p>
+    <a class="button light" href={`mailto:${profile.email}`}>Email {profile.nameZh} <span>→</span></a>
+  </section>
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { profile } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
+const timeline = [
+  {
+    period: '2015.03 — Present',
+    role: 'Lecturer, Department of Communication Engineering',
+    place: 'Shanghai University of Electric Power (上海电力大学)',
+  },
+  {
+    period: '2015',
+    role: 'Ph.D. in Signal and Information Processing',
+    place: 'Shanghai Jiao Tong University (上海交通大学)',
+  },
+];
+---
+
+<BaseLayout title="CV & Contact" description={`Curriculum vitae and contact information for ${profile.name} (${profile.nameZh}).`}>
+  <PageIntro
+    eyebrow="CV / Contact"
+    title={`${profile.name} · ${profile.nameZh}`}
+    description="Appointments, education, and contact details. Selected patents and project history appear under Projects and Publications."
+  />
+
+  <section class="section-pad cv-layout">
+    <div class="cv-main">
+      <div class="section-heading compact-heading">
+        <div><p class="eyebrow">Curriculum vitae</p><h2>Appointments & education</h2></div>
+        {profile.cvFile ? (
+          <a class="button secondary" href={`${base}${profile.cvFile}`} download>Download full CV</a>
+        ) : null}
+      </div>
+      <div class="timeline">
+        {timeline.map((item) => (
+          <div class="timeline-item">
+            <p class="timeline-period">{item.period}</p>
+            <div>
+              <h3>{item.role}</h3>
+              <p>{item.place}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="cv-sections">
+        <div>
+          <p class="mini-label">Patents (selected)</p>
+          <h3>National invention patents</h3>
+          <p>
+            Surface-defect positive-sample expansion; multi-class and inter-layer cover-ratio NMS;
+            windowed-LASSO sound source localization under strong noise; hybrid vector coding and
+            scalable speech–music joint coding systems.
+          </p>
+        </div>
+        <div>
+          <p class="mini-label">Profiles</p>
+          <h3>Academic identifiers</h3>
+          <p>
+            Google Scholar and ORCID are linked on this site. Institutional email is listed in the contact card.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="contact-card">
+      <p class="eyebrow">Contact</p>
+      <h2>Get in touch</h2>
+      <p>For research collaboration or student inquiry, please include background, interests, and a short note on alignment with our work.</p>
+      <dl>
+        <div><dt>Email</dt><dd><a href={`mailto:${profile.email}`}>{profile.email}</a></dd></div>
+        <div><dt>Affiliation</dt><dd>{profile.departmentZh}<br />{profile.institutionZh}</dd></div>
+        <div><dt>Location</dt><dd>{profile.location}</dd></div>
+      </dl>
+      <a class="button primary full" href={`mailto:${profile.email}?subject=Research%20inquiry`}>Email me <span>→</span></a>
+      <div class="contact-links">
+        <a href={profile.links.scholar} target="_blank" rel="noopener">Google Scholar ↗</a>
+        <a href={profile.links.orcid} target="_blank" rel="noopener">ORCID ↗</a>
+      </div>
+    </aside>
+  </section>
+</BaseLayout>

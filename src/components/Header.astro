@@ -1,0 +1,42 @@
+---
+import { navigation, profile } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
+const linkTo = (href: string) => `${base}${href}`;
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => {
+  const target = linkTo(href);
+  if (!href) return currentPath === base || currentPath === base.slice(0, -1);
+  return currentPath.startsWith(target);
+};
+---
+
+<header class="site-header">
+  <a class="brand" href={linkTo('')} aria-label={`${profile.name} — Home`}>
+    <span class="brand-mark" aria-hidden="true">{profile.initials}</span>
+    <span class="brand-name">{profile.nameZh} · {profile.name}</span>
+  </a>
+
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+    <span class="sr-only">Toggle navigation</span>
+    <span></span><span></span>
+  </button>
+
+  <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+    {navigation.map((item) => (
+      <a href={linkTo(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.querySelector<HTMLElement>('.site-nav');
+  button?.addEventListener('click', () => {
+    const open = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', String(!open));
+    nav?.classList.toggle('is-open', !open);
+  });
+</script>

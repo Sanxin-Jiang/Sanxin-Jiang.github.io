@@ -1,0 +1,55 @@
+---
+interface Publication {
+  id: string;
+  year: number;
+  type: string;
+  title: string;
+  authors: string[];
+  venue: string;
+  status: string;
+  selected: boolean;
+  placeholder: boolean;
+  links: { paper?: string; code?: string; project?: string };
+}
+
+interface Props {
+  publications: Publication[];
+  compact?: boolean;
+}
+
+const { publications, compact = false } = Astro.props;
+---
+
+<div class:list={['publication-list', { compact }]}>
+  {publications.map((publication) => (
+    <article
+      class="publication-item"
+      data-publication
+      data-year={publication.year}
+      data-type={publication.type}
+      data-search={`${publication.title} ${publication.authors.join(' ')} ${publication.venue}`.toLowerCase()}
+    >
+      <div class="publication-year">{publication.year}</div>
+      <div class="publication-body">
+        <div class="publication-meta">
+          <span>{publication.type}</span>
+          {publication.placeholder && <span class="sample-tag">Sample · replace me</span>}
+        </div>
+        <h3>{publication.title}</h3>
+        <p class="authors">
+          {publication.authors.map((author, index) => (
+            <><span class:list={{ 'self-author': author === 'Sanxin Jiang' }}>{author}</span>{index < publication.authors.length - 1 ? ', ' : ''}</>
+          ))}
+        </p>
+        <p class="venue"><em>{publication.venue}</em> · {publication.status}</p>
+        {!compact && Object.values(publication.links).some(Boolean) && (
+          <div class="publication-links">
+            {publication.links.paper && <a href={publication.links.paper}>Paper ↗</a>}
+            {publication.links.code && <a href={publication.links.code}>Code ↗</a>}
+            {publication.links.project && <a href={publication.links.project}>Project ↗</a>}
+          </div>
+        )}
+      </div>
+    </article>
+  ))}
+</div>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+
+const courses = [
+  {
+    code: 'Signal Processing',
+    title: 'Courses in the Communication Engineering curriculum',
+    level: 'Undergraduate',
+    description:
+      'Teaching in the Department of Communication Engineering, School of Electronics and Information Engineering, covering foundations relevant to digital signal processing, communication systems, and intelligent sensing.',
+    topics: ['Signal processing', 'Communication systems', 'Practice-oriented labs'],
+  },
+  {
+    code: 'Research Training',
+    title: 'Undergraduate research & graduation projects',
+    level: 'Undergraduate',
+    description:
+      'Supervision of student projects related to visual inspection, audio sensing, and learning-based signal processing, with emphasis on reproducible experiments and clear technical writing.',
+    topics: ['Project mentoring', 'Experiment design', 'Technical communication'],
+  },
+];
+---
+
+<BaseLayout title="Teaching" description="Teaching and student mentoring by Sanxin Jiang at Shanghai University of Electric Power.">
+  <PageIntro
+    eyebrow="Teaching"
+    title="Engineering foundations with research-minded practice."
+    description="I teach in the Communication Engineering program and mentor students on projects at the intersection of signal processing and visual AI. Detailed course codes and schedules can be added when available."
+  />
+
+  <section class="section-pad course-list">
+    {courses.map((course) => (
+      <article class="course-card">
+        <div class="course-code">{course.code}</div>
+        <div class="course-main">
+          <p class="mini-label">{course.level}</p>
+          <h2>{course.title}</h2>
+          <p>{course.description}</p>
+        </div>
+        <ul class="course-topics">{course.topics.map((topic) => <li>{topic}</li>)}</ul>
+      </article>
+    ))}
+  </section>
+
+  <section class="teaching-note section-pad">
+    <div><p class="eyebrow">Mentoring</p><h2>From clear questions to careful evidence.</h2></div>
+    <div>
+      <p>
+        Students are encouraged to state assumptions, design fair experiments, and report what the results actually support—
+        whether the topic is acoustic sensing, defect detection, or generative compression.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { researchAreas } from '../data/site';
+---
+
+<BaseLayout title="Research" description="Research directions of Sanxin Jiang in audio coding, machine audition, visual inspection, and learned compression.">
+  <PageIntro
+    eyebrow="Research"
+    title="Represent, sense, detect, and compress."
+    description="Work connects classical signal coding with modern visual perception: from finite-state audio quantizers and compressive sensing, to industrial defect detection, camouflaged object detection, and rate–distortion guided diffusion for image compression."
+  />
+
+  <section class="section-pad research-detail-list">
+    {researchAreas.map((area) => (
+      <article class="research-detail" id={area.slug}>
+        <div class="research-index">{area.number}</div>
+        <div class="research-detail-main">
+          <h2>{area.title}</h2>
+          <p class="research-short">{area.short}</p>
+          <p>{area.description}</p>
+        </div>
+        <div class="research-topics">
+          <p class="mini-label">Representative topics</p>
+          <ul>{area.topics.map((topic) => <li>{topic}</li>)}</ul>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="section-pad method-band">
+    <div><p class="eyebrow">How we work</p><h2>From clear questions to reproducible evidence.</h2></div>
+    <div class="method-grid">
+      <div><span>01</span><h3>Frame</h3><p>Define the sensing or perception task, constraints, and meaningful baselines.</p></div>
+      <div><span>02</span><h3>Model</h3><p>Design coding, learning, or detection methods grounded in the problem structure.</p></div>
+      <div><span>03</span><h3>Evaluate</h3><p>Test accuracy, efficiency, robustness, and practical relevance.</p></div>
+      <div><span>04</span><h3>Share</h3><p>Publish findings, patents, and resources when possible.</p></div>
+    </div>
+  </section>
+</BaseLayout>

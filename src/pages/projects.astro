@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+
+const projects = [
+  {
+    number: '01',
+    status: 'Ongoing · PI',
+    title: 'Biological AI Development',
+    description:
+      'Industry collaboration with Hangzhou Weibolai Biotechnology Co., Ltd. on biological AI development (2021.12 – 2024.11, ¥500k).',
+    tags: ['AI application', 'Industry collaboration'],
+  },
+  {
+    number: '02',
+    status: 'Completed · PI',
+    title: 'UAV Acoustic Event Detection in Complex Scenes',
+    description:
+      'Open fund of the SJTU Navigation and Sensing Laboratory (H2016-153): acoustic event detection and recognition with UAVs in complex environments (2016.12 – 2018.11, ¥80k).',
+    tags: ['Machine audition', 'UAV', 'Acoustic events'],
+  },
+  {
+    number: '03',
+    status: 'Completed · PI',
+    title: 'UAV-Based Machine Audition Systems',
+    description:
+      'Shanghai Municipal Education Commission outstanding young scholar project on machine audition systems based on unmanned aerial vehicles (2017.12 – 2018.12, ¥40k).',
+    tags: ['Machine audition', 'UAV sensing'],
+  },
+  {
+    number: '04',
+    status: 'Completed · PI',
+    title: 'Deep RL for Spatial Array Speech Enhancement',
+    description:
+      'University research start-up grant on speech enhancement and separation with spatial microphone arrays using deep reinforcement learning (2017.03 – 2020.03, ¥30k).',
+    tags: ['Speech enhancement', 'Microphone arrays', 'Deep RL'],
+  },
+];
+---
+
+<BaseLayout title="Projects" description="Research projects led by Sanxin Jiang on machine audition, visual inspection, and AI applications.">
+  <PageIntro
+    eyebrow="Projects"
+    title="Hosted research and industry collaboration."
+    description="Selected projects for which I served as principal investigator, spanning machine audition, array speech processing, and applied AI."
+  />
+
+  <section class="section-pad project-grid">
+    {projects.map((project) => (
+      <article class="project-card">
+        <div class="project-top"><span>{project.number}</span><span class="project-status">{project.status}</span></div>
+        <div>
+          <h2>{project.title}</h2>
+          <p>{project.description}</p>
+        </div>
+        <ul class="tag-list">{project.tags.map((tag) => <li>{tag}</li>)}</ul>
+      </article>
+    ))}
+  </section>
+
+  <section class="section-pad collaboration-band">
+    <p class="eyebrow">Collaboration</p>
+    <div class="collaboration-grid">
+      <div><h3>Academic</h3><p>Joint work on visual perception, audio sensing, and learned compression.</p></div>
+      <div><h3>Industry</h3><p>Applied AI for inspection, sensing, and domain-specific development tasks.</p></div>
+      <div><h3>Students</h3><p>Projects in computer vision, signal processing, and intelligent sensing.</p></div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,15 @@
+---
+import { profile } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div>
+    <p class="footer-name">{profile.nameZh} · {profile.name}</p>
+    <p>{profile.departmentZh} · {profile.institutionZh}</p>
+  </div>
+  <div class="footer-meta">
+    <a href={`mailto:${profile.email}`}>{profile.email}</a>
+    <p>© {year} · Built with Astro</p>
+  </div>
+</footer>
